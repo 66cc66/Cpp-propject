@@ -1,0 +1,157 @@
+#include<iostream>
+using namespace std;
+
+template <typename T>
+void my_swap(T& a, T& b)
+{
+	T temp = a;
+	a = b;
+	b = temp;
+}
+
+int main()
+{
+	double a = 3, b = 4;
+	int c = 3;
+	/*double d = 5.0;
+	my_swap(c, d);*/
+	my_swap(a, b);
+	cout << a << " " << b;
+	return 0;
+}
+
+注意事项
+1.自动类型推导，必须推导出一致的数据类型T，才可使用
+2.模板必须推出T，才能使用
+
+template <class T>
+void fun()
+{
+	cout << "模板必须推出T，才能使用\n";
+}
+
+int main()
+{
+	//fun();
+	fun<int>();//用显示指定类型,给T一个具体类型
+	return 0;
+}
+
+实例
+
+template <class T>
+void mswap(T&a, T&b)
+{
+	T temp = a;
+	a = b;
+	b = temp;
+}
+
+template <class T>
+void selec_sort(T *arr)
+{
+	for (int j = 0; j < 5; j++)
+	{
+		int index = j;//认定最大、小下标
+		for (int i = j + 1; i < 5; i++)
+		{
+			if (arr[index] > arr[i])
+				index = i;
+		}
+
+		if (index != j)
+			mswap(arr[index], arr[j]);
+	}
+}
+
+int main()
+{
+	char arrc[5] = "nghr";
+	int arri[5] = { 5,4,7,2,1 };
+	selec_sort(arrc);
+	selec_sort(arri);
+	for (int i = 0; i < 5; i++)
+	{
+		cout << arrc[i] << " ";
+		cout << arri[i] << " ";
+	}
+	return 0;
+}
+
+普通函数与函数模板的区别
+1.普通函数调用是可以发生自动类型转换（隐式类型转换）
+2.函数模板调用时，如果利用自动类型推导，不会发生隐式类型转换
+3.如果利用指定类型的方式，可以发生隐式类型转换
+
+1.如果函数模板和普通函数都可调用，优先调用普通函数
+2.可以通过空模板参数列表强制调用函数模板
+3.函数模板可以发生函数重载
+4.如果函数模板可以产生更好的匹配，优先调用函数模板
+5.既然提供了函数模板就不要提供普遍函数了，否则容易出现二义性
+
+template <class T>
+void print(T a, T b)
+{
+	cout << "函数模板1的调用\n";
+}
+
+template <class T>
+void print(T a, T b, T c)
+{
+	cout << "函数模板2的调用\n";
+}
+
+void print(int a, int b)
+{
+	cout << "普通函数的调用\n";
+}
+
+int main()
+{
+	print(3, 4);
+	print<>(3, 4);
+	print(3, 4, 5);
+	print(3.33, 4.3);
+	return 0;
+}
+
+模板的局限性:对于数组，自定义类型等不好操作,需要用具体化的方式做特殊实现
+
+class Person
+{
+public:
+	int age;
+	string name;
+	Person(int age, string name)
+	{
+		this->age = age;
+		this->name = name;
+	}
+};
+
+template <class T>
+bool compare(T& a, T& b)
+{
+	if (a == b)
+		return true;
+	return false;
+}
+
+template <> bool compare(Person& p1, Person& p2)
+{
+	if (p1.age == p2.age && p1.name == p2.name)
+		return true;
+	return false;
+}
+
+int main()
+{
+	Person p1(3, "er"), p2(4, "ff");
+	
+	bool ret = compare(p1, p2);
+	if (ret)
+		cout << "a == b\n";
+	cout << "a != b\n";
+	return 0;
+}
+
