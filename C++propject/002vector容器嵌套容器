@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+#include <vector>
+
+int main()
+{
+	vector<vector<int>> vv;
+
+	//创建小容器
+	vector<int> v1;
+	vector<int> v2;
+	vector<int> v3;
+
+	for (int i = 0; i < 3; i++)
+	{
+		v1.push_back(i);
+		v2.push_back(i + 1);
+		v3.push_back(i + 3);
+	}
+
+	//将小容器放到大容器中
+	vv.push_back(v1);
+	vv.push_back(v2);
+	vv.push_back(v3);
+
+	for (vector<vector<int>>::iterator it = vv.begin(); it != vv.end(); it++)
+	{
+		for (vector<int>::iterator i = it->begin(); i != it->end(); i++)//it->begin == v1;以此类推
+			cout << *i << " ";
+	}
+}
