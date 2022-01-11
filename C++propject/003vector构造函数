@@ -1,0 +1,56 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+
+void print(vector<int>& a)
+{
+	for (vector<int>::iterator it = a.begin(); it != a.end(); it++)
+		cout << *it << " ";
+	cout << endl;
+}
+
+//采用模板实现类实现，默认构造函数
+
+void test1()
+{
+	vector<int> v1;
+	for (int i = 0; i < 5; i++)
+		v1.push_back(i);
+	print(v1);
+}
+
+//拷贝构造函数
+
+void test2()
+{
+	vector<int> v1;
+	for (int i = 0; i < 5; i++)
+		v1.push_back(i);
+	vector<int> v2(v1);
+	print(v2);
+}
+
+//将区间中的元素拷贝给本身
+
+void test3()
+{
+	vector<int> v1;
+	for (int i = 0; i < 5; i++)
+		v1.push_back(i);
+	vector<int> v3(v1.begin(), v1.end());
+	print(v3);
+}
+
+//构造函数将n个elem拷贝给本身
+
+void test4()
+{
+	vector<int> v4(5, 250);
+	print(v4);
+}
+
+int main()
+{
+	test4();
+	return 0;
+}
