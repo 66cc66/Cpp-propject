@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+
+void print(vector<int>& v)
+{
+	for (int i = 0; i < v.size(); i++)
+		cout << v[i] << " ";
+	cout << endl;
+}
+
+void test()
+{
+	vector<int> v, w;
+	for (int i = 0; i < 5; i++)
+	{
+		v.push_back(i);
+		w.push_back(i + 5);
+	}
+	print(v);
+	print(w);
+	v.swap(w);
+	print(v);
+	print(w);
+}
+
+//实际用途
+//巧用swap可以收缩内存空间
+
+void Test()
+{
+	vector<int> v;
+	for (int i = 0; i < 1000; i++)
+		v.push_back(i);
+	cout << v.capacity() << endl;
+	cout << v.size() << endl;
+
+	v.resize(3);
+	vector<int>(v).swap(v);//利用匿名对象,执行完这条语句后系统就立即回收
+	cout << v.capacity() << endl;
+	cout << v.size() << endl;
+}
+
+int main()
+{
+	//test();
+	Test();
+	return 0;
+}
