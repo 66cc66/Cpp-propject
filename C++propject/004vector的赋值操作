@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+
+void print(vector<int>& a)
+{
+	for (vector<int>::iterator it = a.begin(); it != a.end(); it++)
+		cout << *it << " ";
+	cout << endl;
+}
+
+int main()
+{
+	vector<int> v1;
+	for (int i = 0; i < 5; i++)
+		v1.push_back(i);
+
+	vector<int> v2;
+	v2 = v1;//重载等号操作符
+	print(v1);
+	print(v2);
+
+	//assign
+	vector<int> v3;
+	v3.assign(v1.begin(), v1.end());
+	
+	vector<int> v4;
+	v4.assign(5, 250);
+	print(v3);
+	print(v4);
+	return 0;
+}
