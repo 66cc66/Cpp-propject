@@ -1,0 +1,41 @@
+#include<iostream>
+using namespace std;
+#include<deque>
+
+void print(const deque<int>& d)
+{
+	for (size_t i = 0; i < d.size(); i++)
+		cout << d[i] << " ";
+	cout << endl;
+	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++)//给迭代器加个const_可以使数据不被改变
+	{
+		//*it = 10;
+		cout << *it << " ";
+	}
+	cout << endl;
+}
+
+void test()
+{
+	deque<int> d;
+	for (int i = 0; i < 5; i++)
+	{
+		d.push_back(i);
+	}
+	print(d);
+
+	deque<int> d2 ; d2 = d;
+	print(d2);
+
+	deque<int> d3(4, 10);
+	print(d3);
+
+	deque<int> d4(d2);
+	print(d4);
+
+}
+int main()
+{
+	test();
+	return 0;
+}
