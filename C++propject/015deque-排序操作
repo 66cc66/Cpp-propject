@@ -1,0 +1,27 @@
+#include<iostream>
+using namespace std;
+#include<deque>
+#include<algorithm>
+
+void print(const deque<int>& d)
+{
+	for (deque<int>::const_iterator id = d.begin(); id != d.end(); id++)
+		cout << *id << endl;
+	cout << endl;
+}
+
+int main()
+{
+	deque<int> d;
+	d.push_back(2);
+	d.push_back(9);
+	d.push_back(5);
+	d.push_back(6);
+	d.push_back(1);
+
+	//默认从小到大
+	//对于支持随机访问的迭代器的容器，都可用sort算法对其直接排序
+	sort(d.begin(), d.end());
+	print(d);
+	return 0;
+}
