@@ -1,0 +1,91 @@
+#include<iostream>
+using namespace std;
+#include<vector>
+#include<deque>
+#include<algorithm>
+#include<ctime>
+
+class Person
+{
+public:
+	float m_score;
+	string m_name;
+	Person(string name, float score)
+	{
+		this->m_name = name;
+		this->m_score = score;
+	}
+};
+
+vector<Person>& Create();
+void Setscore(vector<Person>& v);
+void Sort(deque<float>& f);
+float dequeprint(const deque<float> f);
+
+
+int main()
+{
+	srand((size_t)time(NULL));
+	Setscore(Create());
+	
+	return 0;
+}
+
+vector<Person>& Create()
+{
+	string nameSeed = "ABCDE";
+	static vector<Person> v;
+	for (int i = 0; i < 5; i++)
+	{
+		string name = "选手";
+		name += nameSeed[i];
+
+		Person p(name, 0);
+		v.push_back(p);
+	}
+	return v;
+}
+
+void Setscore(vector<Person>& v)
+{
+	
+	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		deque<float> f;
+		//cout << "请给" << it->m_name << "选手打分\n";
+		for (int i = 0; i < 10; i++)
+		{
+			//cin >> it->m_score;
+			float score = rand() % 41 + 60;
+			f.push_back(score);
+		}
+		Sort(f);
+		 
+		//将平均分赋给选手
+		it->m_score = dequeprint(f);
+		cout << "选手" << it->m_name << "的最终得分为：" << it->m_score;
+		cout << endl; cout << endl;
+	}
+}
+
+void Sort(deque<float>& f)
+{
+	sort(f.begin(), f.end());
+	f.pop_front();
+	f.pop_back();
+}
+
+float dequeprint(const deque<float> f)
+{
+	float sum = 0;
+	for (deque<float>::const_iterator it = f.begin(); it != f.end(); it++)
+	{
+		cout << *it << " ";
+		sum += *it;
+	}
+	cout << endl;
+	float average = sum/f.size();
+	return average;
+}
+
+
