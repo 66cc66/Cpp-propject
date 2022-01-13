@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+#include<queue>
+
+int main()
+{
+	queue<int> st;
+
+	//往队尾加
+	st.push(9);
+	st.push(8);
+	st.push(7);
+
+	cout << st.size() << endl;
+	
+	cout << st.back() << endl;
+	while (!st.empty())
+	{
+		cout << st.front() << " ";
+		st.pop();
+	}
+	cout << endl;
+	return 0;
+}
+
+class Person
+{
+public:
+	int m_age;
+	string m_name;
+	Person(string name, int age)
+	{
+		this->m_age = age;
+		this->m_name = name;
+	}
+	virtual ~Person()
+	{
+
+	}
+};
+
+int main()
+{
+	queue<Person> p;
+	
+	Person p1("唐僧", 21);
+	Person p2("悟空", 1000);
+	Person p3("八戒", 999);
+	Person p4("沙僧", 888);
+	p.push(p1);
+	p.push(p2);
+	p.push(p3);
+	p.push(p4);
+
+	//队列不提供迭代器，更不支持随机访问
+	while (!p.empty())
+	{
+		cout << p.front().m_name << " " << p.front().m_age << endl;
+		p.pop();
+	}
+	return 0;
+}
