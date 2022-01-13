@@ -1,0 +1,28 @@
+#include<iostream>
+#include<list>
+using namespace std;
+
+//list中不支持用[]和at.()方式来访问它的元素
+//原因list本质是链表，不是用连续线性空间存储数据，迭代器也是不支持随机访问，但支持双向访问
+
+int main()
+{
+	list<int> st;
+	st.push_front(1);
+	st.push_front(2);
+	st.push_back(3);
+	st.push_back(4);
+
+	cout << st.front() << endl;
+	cout << st.back() << endl;
+
+	while (!st.empty())
+	{
+		/*cout << st.front() << " ";
+		st.pop_front();*/
+		cout << st.back() << " ";
+		st.pop_back();
+	}
+	cout << endl;
+	return 0;
+}
