@@ -1,0 +1,46 @@
+#include<iostream>
+#include<list>
+using namespace std;
+
+void print(const list<int>& st)
+{
+	for (list<int>::const_iterator it = st.begin(); it != st.end(); it++)
+		cout << *it << " ";
+	cout << endl;
+}
+
+int main()
+{
+	list<int> st;
+	//插入
+ st.push_back(1);
+ print(st);
+	st.push_front(9);
+	print(st);
+
+	cout << *st.insert(++st.begin(), 2) << endl;//返回新数据的位置
+	print(st);
+
+	st.insert(st.end(), 2, 250);
+	print(st);
+
+	st.insert(--st.end(), st.begin(), st.end());
+	print(st);
+
+	//删除
+	st.remove(250);//删除容器中 所有与elem值匹配的元素
+	print(st);
+
+	st.pop_front();
+	print(st);
+	st.pop_back();
+	print(st);
+	cout << *st.erase(st.begin()) << endl;//返回下个数据的位置
+	print(st);
+	st.erase(++st.begin(), --st.end());
+	print(st);
+
+	st.clear();
+	print(st);	
+	return 0;
+}
