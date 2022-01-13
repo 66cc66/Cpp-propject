@@ -1,0 +1,37 @@
+#include<iostream>
+#include<list>
+using namespace std;
+
+
+bool descending(int va1, int va2)
+{
+	return va1 > va2;
+}
+
+
+void print(const list<int>& st)
+{
+	for (list<int>::const_iterator it = st.begin(); it != st.end(); it++)
+		cout << *it << " ";
+	cout << endl;
+}
+
+int main()
+{
+	list<int> st;
+	st.push_front(3);
+	st.push_front(2);
+	st.push_front(1);
+	print(st);
+	//翻转
+	st.reverse();
+	print(st);
+	//排序
+	//所有不支持随机访问的迭代器的容器，不可以使用标准算法
+
+	st.sort();
+	print(st);
+	st.sort(descending);
+	print(st);
+	return 0;
+}
