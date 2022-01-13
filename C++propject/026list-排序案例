@@ -1,0 +1,62 @@
+#include<iostream>
+#include<list>
+using namespace std;
+
+class Person
+{
+public:
+	int m_age;
+	string m_name;
+	float m_stature;
+	Person(string name, float stature, int age)
+	{
+		this->m_age = age;
+		this->m_name = name;
+		this->m_stature = stature;
+	}
+};
+
+//对于自定义数据类型，必须指定排序规则
+//高级排序只是在排序规则上再一次进行逻辑规则上的制定
+
+bool Compare(Person& p1, Person& p2)
+{
+	if (p1.m_age != p2.m_age)
+		return p1.m_age < p2.m_age;
+	else
+		return p1.m_stature > p2.m_stature;
+}
+
+void Creatsort(list<Person>& st)
+{
+	cout << "请输入要排序的人数\n";
+	int sum;
+	cin >> sum;
+	cout << "请输入姓名，身高，年龄\n";
+	while (sum)
+	{
+		int age;
+		float stature;
+		string name;
+		cin >> name >> stature >> age;
+		Person p(name, stature, age);
+		st.push_back(p);
+		sum--;
+	}
+	st.sort(Compare);
+}
+
+void print(const list<Person>& st)
+{
+	for (list<Person>::const_iterator it = st.begin(); it != st.end(); it++)
+		cout << it->m_name << " " << it->m_stature << " " << it->m_age << endl;
+	cout << endl;
+}
+
+int main()
+{
+	list<Person> st;
+	Creatsort(st);
+	print(st);
+	return 0;
+}
