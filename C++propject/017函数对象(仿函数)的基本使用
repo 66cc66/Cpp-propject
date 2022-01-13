@@ -1,0 +1,87 @@
+#include<iostream>
+using namespace std;
+
+//1.仿函数在使用时，可以像普通函数那样调用，可以有参数，可以有返回值
+
+class Myprint
+{
+public:
+	void operator()(string name)
+	{
+		cout << name;
+	}
+};
+
+class Myadd
+{
+public:
+	int operator()(int a, int b)
+	{
+		return a + b;
+	}
+};
+
+void test2()
+{
+	Myadd add;
+	cout << add(3, 4) << endl;
+	cout << Myadd()(3, 5) << endl;
+}
+
+void test1()
+{
+	Myprint mp;
+	mp("stl\n");
+	Myprint()("fanghanshu\n");
+}
+
+//2.仿函数可以有自己的状态
+
+class Myprint2
+{
+public:
+	int count;
+
+	Myprint2()
+	{
+		this->count = 0;
+	}
+
+	void operator()(string name)
+	{
+		
+		cout << name;
+		this->count++;
+	}
+};
+
+void test3()
+{
+	Myprint2 sun;
+	sun("c++\n");
+	sun("c++\n");
+	sun("c++\n");
+	cout << sun.count << endl;
+}
+
+//3.仿函数可以作为参数传递
+
+void print(Myprint& dd, string name)
+{
+	dd(name);
+}
+
+void test4()
+{
+	Myprint dd;
+	print(dd, "shuangxiang");
+}
+
+int main()
+{
+	test1();
+	test2();
+	test3();
+	test4();
+	return 0;
+}
