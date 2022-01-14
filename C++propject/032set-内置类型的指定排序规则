@@ -1,0 +1,29 @@
+#include<iostream>
+#include<set>
+#include<algorithm>
+#include<functional>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+int main()
+{
+	set<int> st;
+	for (int i = 0; i < 5; i++)
+		st.insert(i);
+	for_each(st.begin(), st.end(), print());
+	cout << endl;
+
+	set<int, greater<int>> ss;
+	for (int i = 0; i < 5; i++)
+		ss.insert(i);
+	for_each(ss.begin(), ss.end(), print());
+	return 0;
+}
