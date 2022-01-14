@@ -1,0 +1,33 @@
+#include<iostream>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+int main()
+{
+	set<int> s;
+	//s.insert(5);
+	pair < set<int>::iterator, bool> ret = s.insert(5);
+	if (ret.second)
+		cout << "插入成功为: " << *ret.first << endl;
+	else
+		cout << "插入失败\n";
+	multiset<int> st;
+	st.insert(2);
+	st.insert(2);
+	st.insert(3);
+	st.insert(1);
+
+	cout << st.count(2) << endl;
+	for_each(st.begin(), st.end(), print());
+	return 0;
+}
