@@ -1,0 +1,29 @@
+#include<iostream>
+#include<set>
+using namespace std;
+
+//所有元素都会在插入时自动被排序，属于关联式容器，底层为二叉树
+
+void print(const set<int>& st)
+{
+	for (set<int>::const_iterator it = st.begin(); it != st.end(); it++)
+		cout << *it << " ";
+	cout << endl;
+}
+
+int main()
+{
+	set<int> st, s1, s2;
+	st.insert(2);
+	st.insert(3);
+	st.insert(1);
+	st.insert(1);
+	//不允许插重复值
+	print(st);
+
+	set<int> s3(st);
+	print(s3);
+	s1 = st;
+	print(s1);
+	return 0;
+}
