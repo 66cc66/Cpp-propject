@@ -1,0 +1,14 @@
+#include<iostream>
+using namespace std;
+
+//成对出现的数据，利用对组可以返回两个数据
+
+int main()
+{
+	pair<int, string> p(18, "xxx");
+	cout << p.second << " " << p.first << endl;
+
+	pair<int, string> pp = make_pair(20, "ttt");
+	cout << pp.second << " " << pp.first << endl;
+	return 0;
+}
