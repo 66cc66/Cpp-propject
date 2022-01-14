@@ -1,0 +1,37 @@
+#include<iostream>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+int main()
+{
+	set<int> st;
+	st.insert(2);
+	st.insert(3);
+	st.insert(1);
+	cout << st.size() << endl;
+	for_each(st.begin(), st.end(), print());
+	cout << endl;
+
+	set<int> ss;
+	ss.insert(4);
+	ss.insert(5);
+	ss.insert(6);
+	for_each(ss.begin(), ss.end(), print());
+	cout << endl;
+
+	ss.swap(st);
+	for_each(ss.begin(), ss.end(), print());
+	cout << endl;
+	
+	return 0;
+}
