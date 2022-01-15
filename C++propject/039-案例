@@ -1,0 +1,94 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<map>
+#include<ctime>
+#define Art 0
+#define Scheme 1
+#define ReaDev 2
+using namespace std;
+
+class Person
+{
+public:
+	string m_name;
+	int m_wage;
+	Person(string name, int wage)
+	{
+		this->m_name = name;
+		this->m_wage = wage;
+	}
+};
+
+void Showgrop(multimap<int, Person> m)
+{
+	multimap<int, Person>::iterator pos = m.find(Art);
+	int count = m.count(Art);
+	int index = 0;
+	cout << "ART\n";
+	for (; pos != m.end() && count > index; index++, pos++)
+	{
+		cout << "姓名：" << pos->second.m_name << " 薪资：" << pos->second.m_wage << endl;
+	}
+
+	cout << "-----------\n" << "SCHEME\n";
+	pos = m.find(Scheme);
+	count = m.count(Scheme);
+	index = 0;
+	for (; pos != m.end() && count > index; index++, pos++)
+	{
+		cout << "姓名：" << pos->second.m_name << " 薪资：" << pos->second.m_wage << endl;
+	}
+
+	cout << "----------\n" << "READEV\n";
+	pos = m.find(ReaDev);
+	count = m.count(ReaDev);
+	index = 0;
+	for (; pos != m.end() && count > index; index++, pos++)
+	{
+		cout << "姓名：" << pos->second.m_name << " 薪资：" << pos->second.m_wage << endl;
+	}
+}
+
+void group(vector<Person>& v, multimap<int, Person>& m)
+{
+	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		int dep = rand() % 3;
+		m.insert(make_pair(dep, *it));
+	}
+}
+
+void CreatePerson(vector<Person>& v)
+{
+	string NameSeed = "ABCDEFGHIJ";
+	for (int i = 0; i < 10; i++)
+	{
+		string name = "员工";
+		name += NameSeed[i];
+		int wage = rand()%10000 + 1000;
+		Person p(name, wage);
+		v.push_back(p);
+	}
+}
+
+class print
+{
+public:
+	void operator()(const Person p)
+	{
+		cout << p.m_name << " " << p.m_wage << endl;
+	}
+};
+
+int main()
+{
+	srand(size_t(time));
+	vector<Person> v;
+	multimap<int, Person> m;
+	CreatePerson(v);
+	//for_each(v.begin(), v.end(), print());
+	group(v, m);
+	Showgrop(m);
+	return 0;
+}
