@@ -1,0 +1,38 @@
+#include<iostream>
+#include<map>
+#include<algorithm>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(pair<int, int> p)
+	{
+		cout << p.first << " " << p.second << endl;
+	}
+};
+
+int main()
+{
+	//插入
+	map<int, int> m;
+	m.insert(pair<int, int>(1, 4));
+	m.insert(make_pair(2, 5));
+	m.insert(map<int, int>::value_type(3, 6));
+	//[]不建议插入，可用key访问value
+	m[4] = 7;
+	for_each(m.begin(), m.end(), print());
+	//cout << m[5] << endl;
+	cout << "------------\n";
+	//删除
+	m.erase(m.begin());
+	for_each(m.begin(), m.end(), print());
+	//根据key
+	m.erase(3);
+	for_each(m.begin(), m.end(), print());
+	m.erase(m.begin(), --m.end());
+	for_each(m.begin(), m.end(), print());
+	m.clear();
+	for_each(m.begin(), m.end(), print());
+	return 0;
+}
