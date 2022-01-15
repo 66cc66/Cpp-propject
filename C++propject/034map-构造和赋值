@@ -1,0 +1,35 @@
+//map中所有元素都是pair
+//pair中第一个元素为key，起到索引的作用，第二个元素为value
+//所有元素都会根据key，自动排序
+//map/multimap属于关联式容器，底层结构为二叉树
+
+#include<iostream>
+#include<map>
+#include<algorithm>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(pair<int, int> p)
+	{
+		cout << p.first << " " << p.second << endl;
+	}
+};
+
+int main()
+{
+	map<int, int> p;
+	p.insert(pair<int, int>(1, 20));
+	p.insert(pair<int, int>(2, 30));
+	p.insert(pair<int, int>(3, 20));
+	for_each(p.begin(), p.end(), print());
+
+	map<int, int> m(p);
+	for_each(m.begin(), m.end(), print());
+
+	map<int, int> n;
+	n = m;
+	for_each(n.begin(), n.end(), print());
+	return 0;
+}
