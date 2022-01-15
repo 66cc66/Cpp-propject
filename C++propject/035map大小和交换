@@ -1,0 +1,33 @@
+#include<iostream>
+#include<map>
+#include<algorithm>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(pair<int, int> p)
+	{
+		cout << "key: " << p.first << " " << "value: " << p.second << endl;
+	}
+};
+
+int main()
+{
+	map<int, int> m, p;
+	
+	for (int i = 0; i < 4; i++)
+	{
+			int j = 4 - i; 
+			m.insert(pair<int, int>(i, j));
+			p.insert(pair<int, int>(i, i));
+	}
+	cout << m.size() << endl << "befor:swap\n";
+	for_each(m.begin(), m.end(), print());
+	for_each(p.begin(), p.end(), print());
+	cout << "--------------------\n" << "after:swap\n";
+	p.swap(m);
+	for_each(m.begin(), m.end(), print());
+	for_each(p.begin(), p.end(), print());
+	return 0;
+}
