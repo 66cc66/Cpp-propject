@@ -1,0 +1,71 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+//class Greaterthree
+//{
+//public:
+//	bool operator()(int val)
+//	{
+//		return val > 3;
+//	}
+//};
+//
+//int main()
+//{
+//	vector<int> v;
+//	for (int i = 0; i < 5; i++)
+//		v.push_back(i);
+//	cout << *find_if(v.begin(), v.end(), Greaterthree());
+//	return 0;
+//}
+
+class Person
+{
+public:
+	int m_age;
+	string m_name;
+	Person(int age, string name)
+	{
+		this->m_age = age;
+		this->m_name = name;
+	}
+};
+
+class Greatertwelve
+{
+public:
+	bool operator()(const Person& p)
+	{
+		return p.m_age > 12;
+	}
+};
+
+class print
+{
+public:
+	void operator()(const Person& p)
+	{
+		cout << p.m_name << " " << p.m_age << endl;
+	}
+};
+int main()
+{
+	vector<Person> v;
+	string NameSeed = "ABCDE";
+	for (int i = 0; i < 5; i++)
+	{
+		string name;
+		name = NameSeed[i];
+		Person p(i + 10, name);
+		v.push_back(p);
+	}
+	vector<Person>::iterator it = find_if(v.begin(), v.end(), Greatertwelve());
+	if (it == v.end())
+		cout << "未找到\n";
+	else
+		cout << it->m_name << " " << it->m_age << endl;
+	for_each(v.begin(), v.end(), print());
+	return 0;
+}
