@@ -1,0 +1,25 @@
+#include<iostream>
+#include<algorithm>
+#include<functional>
+using namespace std;
+
+void test2()
+{
+	plus<int> n;//默认同种类型相加，所以参数为一个
+	cout << n(1, 1) << endl;
+}
+
+//取反
+
+void test1()
+{
+	negate<int> n;
+	cout << n(10) << endl;
+}
+
+int main()
+{
+	test1();
+	test2();
+	return 0;
+}
