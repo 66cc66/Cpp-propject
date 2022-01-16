@@ -1,0 +1,60 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//利用find可以在容器中找到指定的元素，返回值是迭代器
+
+class Person
+{
+public:
+	string m_name;
+	Person(string name)
+	{
+		this->m_name = name;
+	}
+	//重载== 让底层find知道如何对比Person数据类型
+	bool operator==(const Person& p)
+	{
+		if (this->m_name == p.m_name)
+			return true;
+		else
+			return false;
+	}
+};
+
+void test1()
+{
+	vector<int> v;
+	for (int i = 0; i < 5; i++)
+		v.push_back(i);
+	if (find(v.begin(), v.end(), 5) == v.end())//找不到返回结束迭代器end()
+		cout << "没找到\n";
+	else
+		cout << *find(v.begin(), v.end(), 5);
+}
+
+//查找自定义数据类型
+void test2()
+{
+	vector<Person> v; 
+	string NameSeed = "ABCD";
+	for (int i = 0; i < 4; i++)
+	{
+		string name;
+		name = NameSeed[i];
+		Person p(name);
+		v.push_back(p);
+	}
+	vector<Person>::iterator it = find(v.begin(), v.end(), *(--v.end()));
+	if (it == v.end())
+		cout << "没找到\n";
+	else
+		cout << it->m_name;
+}
+
+int main()
+{
+	//test1();
+	test2();
+	return 0;
+}
