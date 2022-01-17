@@ -1,0 +1,29 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<ctime>
+using namespace std;
+
+//random_shuffle:洗牌 指定范围内的元素随机调整次序
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+int main()
+{
+	srand((size_t)time(NULL));
+	vector<int> v;
+	for (int i = 0; i < 15; i++)
+		v.push_back(i);
+	for_each(v.begin(), v.end(), print());
+	cout << endl;
+	random_shuffle(++v.begin(), --v.end());
+	for_each(v.begin(), v.end(), print());
+	return 0;
+}
