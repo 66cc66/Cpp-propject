@@ -1,0 +1,46 @@
+//成员函数后加const 称为常函数
+//常函数内不可修改成员属性
+//成员属性声明时加关键字mutable,则在常函数中依旧可修改
+//声明对象前加const称该对象为常对象
+//常对象只能调用常函数
+
+#include<iostream>
+using namespace std;
+
+class Person
+{
+public:
+	void showperson() const
+	{
+		//this->age = 100;加上const就不能修改了
+		//this = NULL;//this指针本质是指针常量，其指向不可修改
+		this->Age = 10;
+	}
+	int age;
+	mutable int Age;//加了mutable就可改了
+	void fun()
+	{
+		age = 109;
+	}
+};
+
+void test1()
+{
+	Person p;
+	p.showperson();
+}
+
+void test2()
+{
+	const Person p;//在对象前加const,变为常对象
+	//p.age = 19;
+	p.Age = 99;//Age是特殊值，在常对象下也可以修改
+	//p.fun();掉不动, 因为普通成员函数可以修改属性
+}
+
+int main()
+{
+	test1();
+	test2();
+	return 0;
+}
