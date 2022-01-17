@@ -1,0 +1,52 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+void Binary(vector<int>& v, int index)
+{
+	//首先先有序
+	sort(v.begin(), v.end());
+	int mid, left = 0, right = v.size()-1;
+	
+	while (left <= right)
+	{
+		mid = (left + right) / 2;
+		if (mid == index)
+		{
+			cout << "所查值为：" << v[index] << endl;
+			return;
+		}
+		else if (mid < index)
+		{
+			left = mid + 1;
+		}
+		else
+		{
+			right = mid - 1;
+		}
+	}
+	cout << "查无所值\n";
+}
+
+int main()
+{
+	vector<int> v;
+	for (int i = 100; i > 0; i-= 5)
+		v.push_back(i);
+
+	Binary(v, 19);
+	return 0;
+}
+
+int main()
+{
+	vector<int> v;
+	for (int i = 0; i < 5; i++)
+		v.push_back(i);
+	if (binary_search(v.begin(), v.end(), 2))
+		cout << "找到了\n";
+	else
+		cout << "没找到\n";
+	return 0;
+}
