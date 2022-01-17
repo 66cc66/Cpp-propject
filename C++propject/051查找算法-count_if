@@ -1,0 +1,66 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+class Greatertwo
+{
+public:
+	bool operator()(int val)
+	{
+		return val > 2;
+	}
+};
+
+class Person
+{
+public:
+	int m_age;
+	string m_name;
+	Person(int age, string name)
+	{
+		this->m_age = age;
+		this->m_name = name;
+	}
+};
+
+class Greatertwelve
+{
+public:
+	bool operator()(const Person& p)
+	{
+		return p.m_age > 12;
+	}
+};
+
+void test1()
+{
+	vector<int> v;
+	v.push_back(2);
+	v.push_back(7);
+	v.push_back(5);
+	v.push_back(2);
+	v.push_back(2);
+	cout << count_if(v.begin(), v.end(), Greatertwo());
+}
+
+void test2()
+{
+	vector<Person> v;
+	string NameSeed = "ABCD";
+	for (int i = 0; i < 5; i++)
+	{
+		string name;
+		name = NameSeed[i];
+		int age = i + 10;
+		v.push_back(Person(age, name));
+	}
+	cout << count_if(v.begin(), v.end(), Greatertwelve());
+}
+
+int main()
+{
+	//test1();
+	test2();
+	return 0;
+}
