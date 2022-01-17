@@ -6,16 +6,21 @@ using namespace std;
 class print
 {
 public:
-	void operator()(pair<int, int> p)
+	void operator()(const pair<int, int> p) const
 	{
 		cout << p.first << " " << p.second << endl;
 	}
 };
 
+void Print(const pair<int, int> p)
+{
+	cout << p.first << " " << p.second << endl;
+}
+
 class compare
 {
 public:
-	bool operator()(int v1, int v2)
+	bool operator()(const int& v1, const int& v2) const//这个const很关键啊，不然会报错
 	{
 		return v1 > v2;
 	}
@@ -30,7 +35,6 @@ int main()
 		p.insert(make_pair(i, i + 5));
 	}
 	//for_each(p.begin(), p.end(), print());
-	
-
+	for_each(p.begin(), p.end(), Print);
 	return 0;
 }
