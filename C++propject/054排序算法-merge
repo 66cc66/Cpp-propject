@@ -1,0 +1,36 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+//两个有序序列合在一起还是有序序列
+//merge合并的两个容器必须是有序的(默认必须升序序列）
+
+int main()
+{
+	vector<int> v1, v2, v;
+	for (int i = 5; i > 0; i--)
+	{
+		v1.push_back(i + 2);
+		//v2.push_back(i + 1);
+	}
+
+	v2.push_back(8);
+	v2.push_back(4);
+	v2.push_back(3);
+	v2.push_back(9);
+	sort(v2.begin(), v2.end(), greater<int>());
+	v.resize(v1.size() + v2.size());
+	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v.begin(), greater<int>());
+	for_each(v.begin(), v.end(), print());
+	return 0;
+}
