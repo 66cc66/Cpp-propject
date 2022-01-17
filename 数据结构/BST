@@ -1,0 +1,79 @@
+#include<iostream>
+#define Type int
+using namespace std;
+
+class TreeNode* BST(TreeNode* root, Type key);
+void bstInsert(TreeNode** root, Type key);
+void Preorder(TreeNode* root);
+
+class TreeNode
+{
+public:
+	TreeNode* pLeft;
+	TreeNode* pRight;
+	Type data;
+	TreeNode()
+	{
+		this->pLeft = NULL;
+		this->pRight = NULL;
+		this->data = 0;
+	}
+};
+
+int main()
+{
+	TreeNode* root = NULL;
+	int num[6] = { 4, 2, 7, 4, 5, 6 };
+	for (int i = 0; i < 6;i++)
+		bstInsert(&root, num[i]);
+	Preorder(root);
+	cout << endl << BST(root, 6)->data;
+	return 0;
+}
+
+class TreeNode* BST(TreeNode* root, Type key)
+{
+	if (root)
+	{
+		if (root->data == key)
+			return root;
+		else if (root->data < key)
+		{
+			return BST(root->pRight, key);
+		}
+		else
+		{
+			return BST(root->pLeft, key);
+		}
+	}
+	else
+		return NULL;
+}
+
+void bstInsert(TreeNode** root, Type key)
+{
+	if (*root == NULL)
+	{
+		*root = new TreeNode;
+		(*root)->data = key;
+	}
+	else if ((*root)->data == key)
+	{
+		return;
+	}
+	else if ((*root)->data > key)
+	{
+		bstInsert(&(*root)->pLeft, key);
+	}
+	else
+		bstInsert(&(*root)->pRight, key);
+}
+
+void Preorder(TreeNode* root)
+{
+	if (root == NULL)
+		return;
+	cout << root->data << " ";
+	Preorder(root->pLeft);
+	Preorder(root->pRight);
+}
