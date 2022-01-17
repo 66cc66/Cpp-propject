@@ -1,0 +1,62 @@
+#include<iostream>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+class Person
+{
+public:
+	int m_age;
+	string m_name;
+	Person(int age, string name)
+	{
+		this->m_age = age;
+		this->m_name = name;
+	}
+	
+};
+
+class ComparePerson
+{
+public:
+	bool operator()(const Person& p1, const Person& p2) const
+	{
+		if (p1.m_age != p2.m_age)
+			return p1.m_age > p2.m_age;
+		else
+			return p1.m_name < p2.m_name;
+	}
+};
+
+class print
+{
+public:
+	void operator()(Person p)
+	{
+		cout << p.m_name << " " << p.m_age << endl;
+	}
+};
+
+int main()
+{
+	set<Person, ComparePerson> st;
+	string nameSeed = "ABCDE";
+	for (int i = 0; i < 5; i++)
+	{
+		string name;
+		name = nameSeed[i];
+		Person p(i + 12, name);
+		st.insert(p);
+	}
+	/*Person p1(3, "w");
+	Person p2(2, "f");
+	Person p3(4, "h");
+	Person p4(77, "j");
+	st.insert(p1);
+	st.insert(p2);
+	st.insert(p4);
+	st.insert(p3);*/
+	for_each(st.begin(), st.end(), print());
+	return 0;
+}
+
