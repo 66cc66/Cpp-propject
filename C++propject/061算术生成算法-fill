@@ -1,0 +1,28 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<numeric>
+using namespace std;
+
+//向容器内指定区间填充指定元素
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+int main()
+{
+	vector<int> v;
+	for (int i = 0; i < 5; i++)
+		v.push_back(i);
+	for_each(v.begin(), v.end(), print());
+	cout << endl;
+	fill(v.begin() + 2, v.end() - 1, 250);
+	for_each(v.begin(), v.end(), print());
+	return 0;
+}
