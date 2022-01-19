@@ -1,0 +1,162 @@
+//如何构建?
+//1.本质上跟构建二叉排序树一致
+//2.在构建的过程中，如果发现树不符合特性，则需要进行调整：LL, RR, LR, RL.
+
+//如何判断调整类型？
+//1.找到失衡树的根节点root
+//2.找到导致树失衡的节点Node
+//3.判断Node在root的那一侧(注意是整体)，Node在root孩子的哪一侧
+//如果遇到多棵树不平衡，选择最小树
+
+//RR: 取中间的节点，使他的父亲成为他的左孩子，如果他有左孩子，那就连到他父亲的右孩子上
+//LL: 取中间的节点，使他的父亲成为他的右孩子，如果他有右孩子，那就连到他父亲的左孩子上
+//LR: 取最后一个节点，作为父节点，将他的父亲作为自己的左孩子，将他父亲的父亲作为自己的右孩子
+//	如果他有左右孩子的话，他原先的左孩子连接到父亲的右孩子上，他的右孩子连接到他父亲的父亲的左孩子上
+//RL: 取最后一个节点，作为父节点，将他的父亲作为自己的右孩子，将他父亲的父亲作为自己的左孩子
+//	如果他有左右孩子的话，他原先的右孩子连接到父亲的左孩子上，他的左孩子连接到他父亲的父亲的右孩子上
+
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+class Node
+{
+public:
+	Node* Lchild;
+	Node* Rchild;
+	int data;
+	int height;
+	Node()
+	{
+		this->data = 0;
+		this->Lchild = NULL;
+		this->Rchild = NULL;
+		this->height = 0;
+	}
+};
+
+void AVLinsert(Node** T, int idata);
+void Preorder(Node* T);
+int Get_hight(Node* node);
+void RRrotation(Node* node, Node** T);
+void LLrotation(Node* node, Node** T);
+
+int main()
+{
+	Node* T = NULL;
+	vector<int> v;
+	/*for (int i = 4; i >= 0; i--)
+	{
+		v.push_back(i + 1);
+		AVLinsert(&T, v[4 - i]);
+	}*/
+	/*for (int i = 0; i <= 4; i++)
+	{
+		v.push_back(8);
+		v.push_back(7);
+		v.push_back(9);
+		v.push_back(5);
+		v.push_back(6);
+		AVLinsert(&T, v[i]);
+	}*/
+	for (int i = 0; i <= 4; i++)
+	{
+		v.push_back(1);
+		v.push_back(8);
+		v.push_back(6);
+		v.push_back(7);
+		v.push_back(10);
+		AVLinsert(&T, v[i]);
+	}
+	Preorder(T);
+	return 0;
+}
+
+void AVLinsert(Node** T, int idata)
+{
+	if (*T == NULL)
+	{
+		*T = new Node;
+		(*T)->data = idata;
+	}
+	else if (idata == (*T)->data)
+		return;
+	else if (idata > (*T)->data)
+	{
+		AVLinsert(&((*T)->Rchild), idata);
+		//拿到当前节点左右子树的高度
+		int Lhight = Get_hight((*T)->Lchild);
+		int Rhight = Get_hight((*T)->Rchild);
+		//判断高度差
+		if (Rhight - Lhight == 2)
+		{
+			if (idata > (*T)->Rchild->data)
+			{//RR
+				RRrotation(*T, T);
+			}
+			else
+			{//RL 
+				LLrotation((*T)->Rchild, &(*T)->Rchild);
+				RRrotation(*T, T);
+			}
+		}
+	}
+	else
+	{
+		AVLinsert(&((*T)->Lchild), idata);
+		int Lhight = Get_hight((*T)->Lchild);
+		int Rhight = Get_hight((*T)->Rchild);
+
+		if (Lhight - Rhight == 2)
+		{
+			if (idata < (*T)->Lchild->data)
+			{//LL
+				LLrotation(*T, T);
+			}
+			else
+			{//LR 
+				RRrotation((*T)->Lchild, &(*T)->Lchild);
+				LLrotation(*T, T);
+			}
+		}
+	}
+	(*T)->height = max(Get_hight((*T)->Lchild), Get_hight((*T)->Rchild)) + 1;
+}
+
+void Preorder(Node* T)
+{
+	if (T == NULL)
+		return;
+	cout << T->data << " ";
+	Preorder(T->Lchild);
+	Preorder(T->Rchild);
+}
+
+int Get_hight(Node* node)
+{
+	return node ? node->height : 0;
+}
+
+void RRrotation(Node* node, Node** T)
+{
+	Node* temp = node->Rchild;
+	node->Rchild = temp->Lchild;
+	temp->Lchild = node;
+	node->height = max(Get_hight(node->Lchild), Get_hight(node->Rchild)) + 1;
+	temp->height = max(Get_hight(temp->Lchild), Get_hight(temp->Rchild)) + 1;
+	*T = temp;
+}
+
+void LLrotation(Node* node, Node** T)
+{
+	//先记录下左孩子，等下作为父节点
+	Node* temp = node->Lchild;
+	//如果他有右孩子，那就连到他父亲的左孩子上
+	node->Lchild = temp->Rchild;
+	//使他的父亲成为他的右孩子
+	temp->Rchild = node;
+	node->height = max(Get_hight(node->Lchild), Get_hight(node->Rchild)) + 1;
+	temp->height = max(Get_hight(temp->Lchild), Get_hight(temp->Rchild)) + 1;
+	*T = temp;
+}
