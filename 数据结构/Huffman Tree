@@ -1,0 +1,125 @@
+   //1.要使用指定权值的节点列表生成哈夫曼树
+//2.遍历哈夫曼树
+//3.取节点中最小的两个节点
+//4.顺序存储
+
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+class Node
+{
+public:
+	int parent, lchild, rchild, weight;
+	Node()
+	{
+		this->lchild = -1;
+		this->parent = 0;
+		this->rchild = -1;
+		this->weight = 0;
+	}
+};
+
+//save node
+class HFtree
+{
+public:
+	Node* data;
+	int length;
+	/*HFtree(int len)
+	{
+		this->length = len;
+		this->data = new Node;
+	}*/
+};
+
+HFtree* initTree(int* weight, int len)
+{
+	HFtree* T = new HFtree;
+	T->data = new Node[2 * len - 1];
+	T->length = len;
+	for (int i = 0; i < len; i++)
+	{
+		T->data[i].weight = weight[i];
+		T->data[i].parent = 0;
+		T->data[i].rchild = -1;
+		T->data[i].lchild = -1;
+	}
+	return T;
+}
+
+int* selectMin(HFtree* T)
+{
+	int min = 1000;
+	int secondMin = 1000;
+	int minIndex = -2, secondIndex = -1;
+	for (int i = 0; i < T->length; i++)
+	{
+		if (T->data[i].parent == 0)
+		{
+			if (T->data[i].weight < min)
+			{
+				min = T->data[i].weight;
+				minIndex = i;
+			}
+		}
+	}
+	//再找一次
+	for (int i = 0; i < T->length; i++)
+	{
+		if (T->data[i].parent == 0 && i != minIndex)
+		{
+			if (T->data[i].weight < secondMin)
+			{
+				secondMin = T->data[i].weight;
+				secondIndex = i;
+			}
+		}
+	}
+	//返回两个值用指针
+	int* res = new int[2];
+	res[0] = minIndex;
+	res[1] = secondIndex;
+	return res;
+}
+
+void createHFTree(HFtree* T)
+{
+	int* res;
+	int min, secondmin;
+	int len = T->length * 2 - 1;
+	for (int i = T->length; i < len; i++)
+	{
+		res = selectMin(T);
+		min = res[0];
+		secondmin = res[1];
+		T->data[i].weight = T->data[min].weight + T->data[secondmin].weight;
+		T->data[i].lchild = min;
+		T->data[i].rchild = secondmin;
+		//更新父亲
+		T->data[min].parent = i;
+		T->data[secondmin].parent = i;
+		//节点加了一个
+		T->length++;
+	}
+}
+
+void PreOrder(HFtree* T, int index)
+{
+	if (index != -1)
+	{
+		cout << T->data[index].weight << " ";
+		PreOrder(T, T->data[index].lchild);
+		PreOrder(T, T->data[index].rchild);
+	}
+}
+
+int main()
+{
+	int weight[7] = { 5, 1, 3, 6, 11, 2, 4};
+	HFtree* T = initTree(weight, 7);
+	createHFTree(T);
+	PreOrder(T, T->length - 1);
+	cout << endl;
+	return 0;
+}
