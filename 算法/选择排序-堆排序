@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+//最后一个非叶子节点为len/2 - 1
+//子节点为2i + 1 and 2i + 2
+//void CreateHeap(int* arr, int len)
+//{
+//	int n = 0;
+//	while (n < len - 1)//检测元素大小
+//	{
+//		for (int j = 0; j <= len / 2 - 1; ++j)
+//		{
+//			if (arr[j] <= arr[2 * j + 1])
+//			{
+//				int t = arr[j];
+//				arr[j] = arr[2 * j + 1];
+//				arr[2 * j + 1] = t;
+//			}
+//			if ((2 * j + 2 < len) && arr[j] <= arr[2 * j + 2])
+//			{
+//				int t = arr[j];
+//				arr[j] = arr[2 * j + 2];
+//				arr[2 * j + 2] = t;
+//			}
+//		}
+//		++n;
+//	}
+//}
+
+void swap(int* tree, int max, int i)
+{
+	int t = tree[max];
+	tree[max] = tree[i];
+	tree[i] = t;
+}
+
+//堆化
+void heapify(int* tree, int num, int i)//i 代表对哪个节点进行调整
+{
+	if (num <= i)
+		return;
+	int c1 = 2 * i + 1;
+	int c2 = 2 * i + 2;
+	int max = i;
+	if (c1 < num && tree[c1] > tree[max])
+		max = c1;
+	if (c2 < num && tree[c2] > tree[max])
+		max = c2;
+	//看下是否交换
+	if (max != i)
+	{
+		swap(tree, max, i);
+		heapify(tree, num, max);
+	}
+}
+
+void build_heap(int* tree, int n)
+{
+	int last_node = n - 1;
+	int parent = (last_node - 1) / 2;
+	while (parent >= 0)
+	{
+		heapify(tree, n, parent);
+		--parent;
+	}
+}
+
+//
+void heap_sort(int* tree, int n)
+{
+	build_heap(tree, n); 
+	while (n > 0)
+	{
+		//小心越界
+		swap(tree, 0, n - 1);
+		cout << tree[n - 1] << " ";
+		--n;
+		heapify(tree, n, 0);
+	}
+	cout << endl;
+}
+
+int main()
+{
+	int tree[6] = { 4, 10, 3, 5, 1, 2 };
+	//CreateHeap(arr, len);
+	//int tree[6] = { 1, 2, 3, 4, 5, 6};
+	int num = sizeof(tree) / sizeof(tree[0]);
+	//heapify(tree, num, 0);
+	//build_heap(tree, num);
+	heap_sort(tree, num);
+
+	for (int i = 0; i < num; ++i)
+		cout << tree[i] << " ";
+	return 0;
+}
