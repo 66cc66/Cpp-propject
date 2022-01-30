@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+
+//1.用重载的=
+//2.用assign
+
+void test()
+{
+	string s1;
+	s1 = "shit";
+	cout << s1 << endl;
+	
+	string s2;
+	s2 = s1;
+	cout << s2 << endl;
+
+	string s3;
+	s3 = 'a';
+	cout << s3 << endl;
+
+	string s4;
+	s4.assign("Hello C++");
+	cout << s4 << endl;
+	string s5;
+	s5.assign("Hello C++", 5);
+	cout << s5 << endl;
+	string s6;
+	s6.assign(s5);
+	cout << s6 << endl;
+	string s7;
+	s7.assign(5, 'r');
+	cout << s7 << endl;
+}
+
+int main()
+{
+	test();
+	return 0;
+}
