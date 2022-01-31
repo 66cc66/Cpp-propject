@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+
+//查找
+void test1()
+{
+	//find
+	string str = "afdsdfds";
+	int pos = str.find("ds");
+	if (pos == -1)
+		cout << "Not Found\n";
+	else
+		cout << "the index is :" << pos << endl;
+	//rfind,从右往左找,返回下标
+	pos = str.rfind("ds");
+	if (pos == -1)
+		cout << "Not Found\n";
+	else
+		cout << "the index is :" << pos << endl;
+}
+
+//替换
+void test2()
+{
+	string str = "You eat shit";
+	//从哪个位置起把哪几个字符替换成新字符
+	str.replace(0, 3, "silly");
+	cout << str << endl;
+}
+
+int main()
+{
+	test1();
+	test2();
+	return 0;
+}
