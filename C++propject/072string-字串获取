@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+
+//原型:string substr(int pos = 0, int n = npos) const;返回由pos开始的n个字符组成的字符串
+
+void test()
+{
+	string str = "substr";
+	cout << str.substr(2, 3) << endl;
+}
+
+//实用操作
+void test1()
+{
+	string email = "zhangsan@sina.com";
+	//从邮件的地址中获取用户名信息
+	int pos = email.find("@");
+	string userName = email.substr(0, pos);
+	cout << userName << endl;
+}
+int main()
+{
+	test();
+	test1();
+	return 0;
+}
