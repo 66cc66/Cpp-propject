@@ -1,0 +1,18 @@
+#include<iostream>
+using namespace std;
+
+void test1()
+{
+	string str = "You silly";
+	str.insert(3, " are");
+	cout << str << endl;
+	
+	str.erase(0, 7);
+	cout << str << endl;
+}
+
+int main()
+{
+	test1();
+	return 0;
+}
