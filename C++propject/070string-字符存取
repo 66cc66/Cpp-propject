@@ -1,0 +1,41 @@
+#include<iostream>
+using namespace std;
+
+//1.重载了的[]
+//2.at()
+
+void test()
+{
+	string str = "silly";
+	
+	for (char c : str)
+	{
+		c = 'd';
+		cout << c << " ";//这种方式修改不了字符串里面的内容,但打印是可以
+	}
+	cout << endl;
+	for (char c : str)
+	{
+		cout << c << " ";
+	}
+	cout << endl;
+	for (size_t i = 0; i < str.size(); ++i)//这个可以
+	{
+		str[0] = 'S';
+		str.at(1) = 'I';
+		cout << str[i] << " ";
+		cout << str.at(i) << " ";
+	}
+	cout << endl;
+	for (size_t i = 0; i < str.size(); ++i)
+	{
+		cout << str[i] << " ";
+		cout << str.at(i) << " ";
+	}
+}
+
+int main()
+{
+	test();
+	return 0;
+}
