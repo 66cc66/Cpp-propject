@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+
+void test()
+{
+	string str = "你";
+	str += "是";
+	cout << str << endl;
+	str += 'a';
+	cout << str << endl;
+
+	string s = "silly, foolish";
+	str += s;
+	cout << str << endl;
+}
+
+void test1()
+{
+	string s1 = "king";
+	s1.append(" of");
+	cout << s1 << endl;
+
+	s1.append(" glory no", 6);//字符串的前5个字符
+	cout << s1 << endl;
+
+	string s2 = "you";
+	s1.append(s2);
+	cout << s1 << endl;
+
+	string s3 = "loldnf";
+	s1.append(s3, 0, 3);//参2 从哪个位置开始截取，参3 截取字符个数
+	cout << s1 << endl;
+}
+
+int main()
+{
+	//test();
+	test1();
+	return 0;
+}
