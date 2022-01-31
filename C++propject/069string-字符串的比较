@@ -1,0 +1,35 @@
+#include<iostream>
+using namespace std;
+
+//比较方式：字符串比较是按字符的ASCLL码一个个进行对比
+//= 返回0， < -1 , > 1
+//意义：比较两个字符串是否相等
+
+void test()
+{
+	string str = "ascll";
+	string s1 = "ASCll";
+	const char* s2 = "shit";
+
+	int flag = str.compare(s1);
+	if (flag == 0)
+		cout << "equal\n";
+	else if (flag == -1)
+		cout << "less\n";
+	else
+		cout << "greater\n";
+
+	flag = str.compare(s2);
+	if (flag == 0)
+		cout << "equal\n";
+	else if (flag == -1)
+		cout << "less\n";
+	else
+		cout << "greater\n";
+}
+
+int main()
+{
+	test();
+	return 0;
+}
