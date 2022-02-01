@@ -1,0 +1,30 @@
+class Solution
+{
+public:
+    vector<int> v;
+
+    void Midorder(const TreeNode* root)
+    {
+        if (root == NULL)
+            return;
+       Midorder(root->left);
+        v.push_back(root->val);
+       Midorder(root->right);
+    }
+
+    bool isValidBST(TreeNode* root) 
+    {
+        v.clear();
+        Midorder(root);
+        for (int i = 1; i < v.size(); ++i)
+        {
+            if (v[i] <= v[i - 1])
+                return false;
+        }
+        return true;
+    }
+ 
+};
+
+//利用中序遍历是升序，可将每个元素存在数组里，然后比较即可
+//v[i] v[i - 1] ,好用
