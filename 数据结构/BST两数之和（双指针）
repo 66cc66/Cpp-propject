@@ -1,0 +1,26 @@
+class Solution 
+{
+public:
+    vector<int> v;
+    void midorder(TreeNode* root)
+    {
+        if (root == NULL)
+            return;
+        midorder(root->left);
+        v.push_back(root->val);
+        midorder(root->right);
+    }
+    bool findTarget(TreeNode* root, int k)
+    {
+        for (int l = 0, r = v.size() - 1; l < r; ) 
+        { // 头尾指针
+            if (v[l] + v[r] == k) // 头指针元素+尾指针元素==目标数,返回找到
+                return true;
+            else if (v[l] + v[r] < k) // 头指针元素+尾指针元素<目标数，头指针后移
+                l++;
+            else // 头指针元素+尾指针元素>目标数，尾指针前移
+                r--;
+        }
+        return false;
+    }
+};
