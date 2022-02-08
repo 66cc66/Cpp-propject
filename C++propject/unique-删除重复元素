@@ -1,0 +1,42 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+//功能：对有序的容器重新排列，将第一次出现的元素从前往后排，其他重复出现的元素依次排在后面
+//返回值：返回迭代器，迭代器指向的是重复元素的首地址
+//一般先排个序
+//原型:iterator unique(iterator it_1,iterator it_2,bool MyFunc);
+
+
+class print
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+int main()
+{
+	vector<int> v;
+	v.push_back(0);
+	v.push_back(0);
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(3);
+	v.push_back(4);
+	for_each(v.begin(), v.end(), print());
+	vector<int> ::iterator it = unique(v.begin(), v.end());
+	cout << endl << *it << endl;
+	for_each(v.begin(), v.end(), print());
+	v.erase(it, v.end());//配合erase使用删除重复元素
+	cout << endl;
+	for_each(v.begin(), v.end(), print());
+	return 0;
+}
