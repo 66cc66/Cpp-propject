@@ -40,3 +40,21 @@ int main()
 	for_each(v.begin(), v.end(), print());
 	return 0;
 }
+
+//源码----------------------------------------------------------------------------------------------------------
+  template <class ForwardIterator>
+  ForwardIterator unique (ForwardIterator first, ForwardIterator last)
+  {
+    //这里隐藏了第三个参数，则使用系统默认的相等机制。
+    if (first==last) return last;//判断是否相等，若相等，则表示数组为空。
+  
+    ForwardIterator result = first;//利用result迭代器去实现功能。
+    while (++first != last)//开始遍历区间[first,last)
+    {
+        //注意first和result，它们都在变，形成一个同步的取缔，其中first一直往后寻找不重复的元素，而result停留在重复的元素等待取缔。仔细理解下面这个if语句。退出循环时也就遍历完成，此时result指向的是最后一个不重复元素。
+      if (!(*result == *first))  // or: if (!pred(*result,*first)) for version (2)
+        *(++result)=*first;
+    }
+    return ++result;//这里++，我们返回的就是最后一个不重复元素的下一个迭代器。
+  }
+
