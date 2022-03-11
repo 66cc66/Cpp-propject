@@ -1,0 +1,18 @@
+TreeNode* build(const vector<int>& inorder, const vector<int>& postorder, int ino_left, int ino_right, int post_left, int post_right)
+{
+    if (ino_left > ino_right)
+        return NULL;
+    //从后序找到根节点
+    int root_val = postorder[post_right];
+    //根据根节点的值找到中序数组中根的下标
+    int root_index = index_root[root_val];
+    //建根
+    TreeNode* root = new TreeNode(root_val);
+    //划分子树,根据左子树数量划分
+    int size_left = root_index - ino_left;
+    //构造子树
+    root->left = build(inorder, postorder, ino_left, root_index - 1, post_left, post_left + size_left - 1);
+    root->right = build(inorder, postorder, root_index + 1, ino_right, post_left + size_left, post_right - 1);
+    //返回节点
+    return root;
+}
