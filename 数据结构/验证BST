@@ -1,0 +1,16 @@
+class Solution 
+{
+public:
+    TreeNode* pre = NULL;
+    bool isValidBST(TreeNode* root) 
+    {
+        if (!root) return true;
+        bool left = isValidBST(root->left);
+        if (pre != NULL && pre->val >= root->val) return false;
+        pre = root;
+        bool right = isValidBST(root->right);
+        return left && right;
+    }
+};
+
+//另一种方法用中序数组
