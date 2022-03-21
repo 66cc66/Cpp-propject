@@ -1,0 +1,51 @@
+class Solution 
+{
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) 
+    {
+        //第一种情况没找到
+        if (!root) return root;
+        
+        if (root->val == key)
+        {
+            //第二种找到了并且左右孩子都为空
+            if (!root->left && !root->right)
+            {
+                delete root;
+                return NULL;
+            }
+            else if (!root->left)//第三种左孩子为空
+            {
+                auto t = root;
+                root = root->right;
+                delete t;
+                return root;
+            }
+            else if (!root->right)//第四种右孩子为空
+            {
+                auto t = root;
+                root = root->left;
+                delete t;
+                return root;
+            }
+            else//第五种都不为空
+            {
+                //1. 先找到右边节点的最左边的节点
+                auto t = root->right;
+                while (t->left != NULL)
+                {
+                    t = t->left;
+                }
+                //2. 再将左孩子接上去
+                t->left = root->left;
+                TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
+                root = root->right;
+                delete tmp;
+                return root;
+            }
+        }
+        if (root->val > key) root->left = deleteNode(root->left, key);
+        if (root->val < key) root->right = deleteNode(root->right, key);
+        return root;
+    }
+};
