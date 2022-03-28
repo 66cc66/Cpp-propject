@@ -1,0 +1,35 @@
+class Solution {
+public:
+    //注意本题是一个排列问题，不是组合问题
+    //排列和组合的最大区别就在于组合不会回头，而排列需要回头
+    vector<vector<int> >res;
+    vector<int> path;
+    map<int, int> hashMap;//因为排列问题可以回头，所以必须确保不会选择已经选过的数，所以用一个哈希表来去重
+    //该函数的含义为找到num数组的所有排列种类
+    void process(vector<int> num,map<int, int> hashMap){
+        //base case
+        //如果path的大小等于num 的大小，返回
+        if(path.size()==num.size()){
+            res.push_back(path);
+            return;
+        }
+        for(int i=0;i<num.size();i++){
+            if(hashMap.find(num[i])!=hashMap.end())//说明之前已经选过这个数了，不能重复选
+                continue;
+            else{//说明这个数还没有被选过，此时可以选择
+                hashMap[num[i]]=1;//记录在哈希表中
+                path.push_back(num[i]);
+                process(num, hashMap);//递归
+                //回溯
+                path.pop_back();
+                hashMap.erase(num[i]);//这里注意虽然吧hashMap写进函数参数表里了，但是每次递归结束后，哈希表中实际上是保存了上一次递归的结果的，这和普通变量是不一样的，所以要手动回溯
+            }
+        }
+    }
+    vector<vector<int> > permute(vector<int> &num) {
+        if(num.size()<=0)
+            return res;
+        process(num, hashMap);
+        return res;
+    }
+};
